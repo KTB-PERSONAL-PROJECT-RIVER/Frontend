@@ -1,18 +1,6 @@
-import { FormEvent, useState } from 'react';
+// import { FormEvent, useState } from 'react';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    // 여기에 폼 제출 로직 구현
-    console.log('Form submitted:', formData);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
       <div className="container mx-auto px-6 lg:px-8">
