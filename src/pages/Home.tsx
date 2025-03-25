@@ -10,7 +10,7 @@ const Home = () => {
       setLoading(true);
       setHealthStatus(null);
 
-      const res = await fetch('https://riverendingstory/api/healthcheck');
+      const res = await fetch('https://riverendingstory.site/api/healthcheck');
       if (!res.ok) throw new Error('응답 실패');
 
       const data = await res.json();
