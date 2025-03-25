@@ -1,6 +1,26 @@
+import React, { useState } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const Home = () => {
+  const [healthStatus, setHealthStatus] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const checkHealth = async () => {
+    try {
+      setLoading(true);
+      setHealthStatus(null);
+
+      const res = await fetch('https://riverendingstory/api/healthcheck');
+      if (!res.ok) throw new Error('응답 실패');
+
+      const data = await res.json();
+      setHealthStatus(`✅ 서버 응답: ${data.message || '정상입니다.'}`);
+    } catch (err) {
+      setHealthStatus('❌ 서버 연결 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-screen-xl mx-auto space-y-12">
@@ -63,6 +83,22 @@ const Home = () => {
           </ul>
         </div>
       </div>
+      <div className="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center space-y-4">
+  <h2 className="text-2xl font-semibold text-gray-900">백엔드 연결 테스트</h2>
+  <p className="text-gray-600">아래 버튼을 눌러 백엔드 서버의 상태를 확인해보세요.</p>
+
+  <button
+    onClick={checkHealth}
+    disabled={loading}
+    className="inline-flex items-center justify-center px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+  >
+    {loading ? '확인 중...' : '헬스 체크'}
+  </button>
+
+  {healthStatus && (
+    <div className="mt-4 text-sm text-gray-800">{healthStatus}</div>
+  )}
+</div>
     </section>
   );
 };
