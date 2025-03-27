@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Home, FolderKanban, Mail, Server } from 'lucide-react';
 
 export default function Sidebar() {
@@ -12,15 +13,30 @@ export default function Sidebar() {
       isActive(path) ? 'bg-blue-600 text-white shadow-md' : 'hover:bg-gray-700'
     }`;
 
-  const handlePing = async () => {
-    try {
-      const response = await fetch('https://riverendingstory.site/api/ping');
-      const data = await response.text();
-      alert(`✅ 서버 응답: ${data}`);
-    } catch (error) {
-      alert(`❌ API 호출 실패: ${error.message}`);
-    }
-  };
+    const handlePing = async () => {
+      try {
+        const res = await fetch('https://riverendingstory.site/api/healthcheck');
+        const data = await res.text();
+    
+        toast.success(`✅ 서버 응답: ${data}`, {
+          duration: 3000,
+          style: {
+            background: '#1e293b',
+            color: '#fff',
+            fontSize: '0.9rem',
+          },
+        });
+      } catch (error) {
+        toast.error(`❌ 오류: ${error.message}`, {
+          duration: 4000,
+          style: {
+            background: '#7f1d1d',
+            color: '#fff',
+            fontSize: '0.9rem',
+          },
+        });
+      }
+    };
 
   return (
     <aside className="w-64 bg-gray-900 text-white fixed h-full p-6 shadow-2xl z-10 flex flex-col justify-between">
