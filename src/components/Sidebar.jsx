@@ -16,18 +16,29 @@ export default function Sidebar() {
     const handlePing = async () => {
       try {
         const res = await fetch('https://riverendingstory.site/api/healthcheck');
-        const data = await res.text();
     
-        toast.success(`✅ 서버 응답: ${data}`, {
-          duration: 3000,
-          style: {
-            background: '#1e293b',
-            color: '#fff',
-            fontSize: '0.9rem',
-          },
-        });
+        if (res.status === 200) {
+          const data = await res.text();
+          toast.success(`✅ 서버 응답 성공: Result = ${data}`, {
+            duration: 3000,
+            style: {
+              background: '#1e293b',
+              color: '#fff',
+              fontSize: '0.9rem',
+            },
+          });
+        } else {
+          toast.error(`❌ 서버 오류 (상태 코드 ${res.status})`, {
+            duration: 4000,
+            style: {
+              background: '#7f1d1d',
+              color: '#fff',
+              fontSize: '0.9rem',
+            },
+          });
+        }
       } catch (error) {
-        toast.error(`❌ 오류: ${error.message}`, {
+        toast.error(`❌ 요청 실패: ${error.message}`, {
           duration: 4000,
           style: {
             background: '#7f1d1d',
@@ -37,6 +48,7 @@ export default function Sidebar() {
         });
       }
     };
+    
 
   return (
     <aside className="w-64 bg-gray-900 text-white fixed h-full p-6 shadow-2xl z-10 flex flex-col justify-between">
