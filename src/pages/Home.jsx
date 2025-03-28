@@ -6,7 +6,7 @@ export default function Home() {
       <div>
         <h2 className="text-4xl font-bold mb-2">안녕하세요!</h2>
         <p className="text-lg text-gray-700 leading-relaxed">
-          클라우드/인프라 엔지니어입니다.
+          클라우드/인프라 엔지니어 빅창수입니다.
           <br />
           효율적이고 안정적인 시스템 설계를 좋아합니다.
           <br />
